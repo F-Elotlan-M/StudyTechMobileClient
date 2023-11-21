@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home"
+        android:title="Inicio" />
+
+    <item
+        android:id="@+id/nav_buscar"
+        android:icon="@drawable/ic_search"
+        android:title="buscar"/>
+
+
+    <item
+        android:id="@+id/nav_favoritos"
+        android:icon="@drawable/ic_favoritos"
+        android:title="favoritos" />
+
+    <item
+        android:id="@+id/nav_masTarde"
+        android:icon="@drawable/ic_time"
+        android:title="ver más tarde"/>
+
+
+</menu>

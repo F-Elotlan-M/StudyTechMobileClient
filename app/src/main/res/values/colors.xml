@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="naranjaClaro">#FFA500</color>
+    <color name="fondo_login">#242c33</color>
+    <color name="botonesPrincipales">#059b9a</color>
+    <color name="paleta1">#0c0636</color>
+    <color name="paleta2">#095169</color>
+</resources>
