@@ -2,6 +2,7 @@
 
 package com.desarrollo.studytechmobile.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -39,13 +40,18 @@ class Login : AppCompatActivity() {
                 val userCredentials = withContext(Dispatchers.IO){
                     usuariosAPIServicios.login(username, password)
                 }
-                if(userCredentials.token == ""){
+                var token = userCredentials.token
+                if(userCredentials.token == "error"){
                     Toast.makeText(applicationContext, "El usuario no ha sido encontrado", Toast.LENGTH_SHORT).show()
                 } else if(userCredentials.token == "exception"){
-                    Toast.makeText(applicationContext, "No se ha podido conectar con la base de datos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Hubo un problema al realizar la acción, vuelve a intentarlo", Toast.LENGTH_SHORT).show()
                 }else if(userCredentials.token != null){
-                    Toast.makeText(applicationContext, "Bienvenido $username", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Bienvenido:  $username", Toast.LENGTH_SHORT).show()
                     usuarioSingleton.token = userCredentials.token;
+                    usuarioSingleton.username = username;
+                    usuarioSingleton.password = password;
+                    val intent = Intent(applicationContext, InicioFragment::class.java)
+                    startActivity(intent)
                 }
 
             }catch (e: Exception) {
