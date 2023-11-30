@@ -2,6 +2,7 @@ package com.desarrollo.studytechmobile.services
 
 import com.desarrollo.studytechmobile.data.CredencialesUsuario
 import com.desarrollo.studytechmobile.data.RespuestaAutenticacion
+import com.google.gson.JsonObject
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -80,7 +81,51 @@ class UsuariosAPIServicios {
         }
     }
 
-    fun registrarUsuario(username: String, password: String, nombre: String, tipo: Int){
+    fun registrarUsuario(nuevoUsuario: CredencialesUsuario): Int{
+        var Respuesta: Int
+        try{
+            val service = httpClient.create(IUsuariosAPIServicios::class.java)
+            val jsonBody = JsonObject().apply {
+                addProperty("username", nuevoUsuario.username)
+                addProperty("password", nuevoUsuario.password)
+                addProperty("nombre", nuevoUsuario.nombre)
+                addProperty("tipo", nuevoUsuario.tipo)
+            }
+
+            val call = service.registrar(jsonBody)
+            val response = call.execute()
+
+            if (response.isSuccessful) {
+                Respuesta = 1
+            } else {
+                Respuesta = 0
+            }
+            return Respuesta
+        }catch(e: Exception){
+            return 2
+        }
+    }
+
+    fun getExistingUser(email: String): String? {
+        try{
+            val service = httpClient.create(IUsuariosAPIServicios::class.java)
+            val call = service.getExistingUser(email)
+            val response = call.execute()
+            if (response.isSuccessful) {
+                val usuarioDTO = response.body()
+                if(usuarioDTO != null){
+                    val username = usuarioDTO?.Username
+                    return username
+                }
+                else{
+                    return null
+                }
+            } else {
+                return null
+            }
+        }catch(e: Exception){
+            return null
+        }
 
     }
 }

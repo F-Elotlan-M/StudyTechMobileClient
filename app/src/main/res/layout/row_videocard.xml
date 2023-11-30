@@ -12,47 +12,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <!-- Imagen a la izquierda -->
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:id="@+id/courseImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"/>
 
-        <!-- Contenedor para el texto -->
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/courseTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp">
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
 
-            <!-- Título -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Título"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <!-- Subtítulo -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Subtítulo"
-                android:textSize="14sp"/>
-
-        </LinearLayout>
-
-        <!-- Menú del lado derecho -->
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@drawable/dots" />
+        <TextView
+            android:id="@+id/courseDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"/>
 
     </LinearLayout>
 
