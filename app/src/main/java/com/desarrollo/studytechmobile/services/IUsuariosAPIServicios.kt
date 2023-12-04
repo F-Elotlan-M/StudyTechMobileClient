@@ -1,7 +1,7 @@
 package com.desarrollo.studytechmobile.services
 import com.desarrollo.studytechmobile.data.CredencialesUsuario
 import com.desarrollo.studytechmobile.data.RespuestaAutenticacion
-import com.desarrollo.studytechmobile.data.UsuarioDTO
+import com.desarrollo.studytechmobile.data.DTOS.UsuarioDTO
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.Body

@@ -1,4 +1,4 @@
-package com.desarrollo.studytechmobile.data
+package com.desarrollo.studytechmobile.data.DTOS
 
 data class UsuarioDTO (
     var Id: Int? = null,
