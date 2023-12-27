@@ -16,7 +16,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RegistrarAcademico : AppCompatActivity() {
+class RegistrarEstudiante : AppCompatActivity() {
     var username: String? = null
     var password: String? = null
     var nombre: String? = null
@@ -25,15 +25,15 @@ class RegistrarAcademico : AppCompatActivity() {
     private val usuariosAPIServicios = UsuariosAPIServicios()
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registrar_academico)
-        val buttonSingin = findViewById<Button>(R.id.buttonRegisterAcademic)
+        setContentView(R.layout.activity_registrar_estudiante)
+        val buttonSingin = findViewById<Button>(R.id.botonRegistrarEstudiante)
         val login = findViewById<TextView>(R.id.textLogin)
 
         buttonSingin.setOnClickListener {
             nombre= findViewById<EditText>(R.id.nameAcademic).text.toString()
             username = findViewById<EditText>(R.id.username).text.toString()
             password = findViewById<EditText>(R.id.password).text.toString()
-            tipo = 1
+            tipo = 2
             singin()
         }
         login.setOnClickListener{
@@ -58,7 +58,7 @@ class RegistrarAcademico : AppCompatActivity() {
                             async{ usuariosAPIServicios.registrarUsuario(credencialesUsuario)}.await()
                         }
                         if(estadoRegistrarAcademico == 1){
-                            Toast.makeText(applicationContext, "Acádemico registrado exitosamente", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "Estudiante registrado exitosamente", Toast.LENGTH_SHORT).show()
                         }else if(estadoRegistrarAcademico == 0){
                             Toast.makeText(applicationContext, "El usuario no se ha podido registrar", Toast.LENGTH_SHORT).show()
                         }else if(estadoRegistrarAcademico == 2){

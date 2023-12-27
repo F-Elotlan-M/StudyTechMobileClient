@@ -1,11 +1,12 @@
 package com.desarrollo.studytechmobile.data
 
-class UsuarioSingleton {
+object UsuarioSingleton {
     var Id: Int? = null
     var username:String? = null
     var password:String? = null
     var token:String? = null
     var Tipo: Int? = null
+    var prueba: String? = null
 
 
     fun borrarSingleton() {
@@ -14,5 +15,6 @@ class UsuarioSingleton {
         password = ""
         token = ""
         Tipo = 0
+        prueba = ""
     }
 }

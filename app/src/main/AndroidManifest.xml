@@ -16,6 +16,8 @@
         android:theme="@style/Theme.StudyTechMobile"
         tools:targetApi="31">
         <activity android:name=".ui.RegistrarAcademico" />
+        <activity android:name=".ui.RegistrarEstudiante" />
+        <activity android:name=".ui.BarraActivity"/>
         <activity
             android:name=".ui.Login"
             android:exported="true">

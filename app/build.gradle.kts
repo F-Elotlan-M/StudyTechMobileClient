@@ -75,6 +75,9 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.8.10")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
 
 
     testImplementation("junit:junit:4.13.2")

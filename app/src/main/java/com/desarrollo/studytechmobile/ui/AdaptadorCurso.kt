@@ -1,22 +1,27 @@
 package com.desarrollo.studytechmobile.ui
 
 import android.content.Context
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.desarrollo.studytechmobile.R
 import com.desarrollo.studytechmobile.data.Video
+import com.desarrollo.studytechmobile.utilidades.FormatoFechas
 
-class AdaptadorCurso (private val context: Context, private val Videos: List<Video>) :
-RecyclerView.Adapter<AdaptadorCurso.CourseViewHolder>() {
+// ...
+
+class AdaptadorCurso(private val context: Context, private val Videos: List<Video>) :
+    RecyclerView.Adapter<AdaptadorCurso.CourseViewHolder>() {
 
     inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val courseImage: ImageView = itemView.findViewById(R.id.courseImage)
         val courseTitle: TextView = itemView.findViewById(R.id.courseTitle)
-        val courseDescription: TextView = itemView.findViewById(R.id.courseDescription)
+        val courseDate: TextView = itemView.findViewById(R.id.courseDate)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
@@ -25,21 +30,41 @@ RecyclerView.Adapter<AdaptadorCurso.CourseViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
-        val currentVideos = Videos[position]
+        val currentVideo = Videos[position]
 
-        // Asignar datos a la tarjeta
-        holder.courseTitle.text = currentVideos.Nombre
-        holder.courseDescription.text = currentVideos.FechaModificacion
-        // Aquí deberías cargar la imagen utilizando una biblioteca como Glide o Picasso
-        // Ejemplo: Glide.with(context).load(currentCourse.imageUrl).into(holder.courseImage)
+        if (currentVideo.imagen?.length ?: 0 >= 100) {
+            val toRemove = "data:image/jpeg;base64,"
+            currentVideo.imagen = currentVideo.imagen.removePrefix(toRemove)
+            Glide.with(context)
+                .load(decodeBase64(currentVideo.imagen))
+                .into(holder.courseImage)
+        } else {
+            Glide.with(context)
+                .load(R.drawable.noimage)
+                .into(holder.courseImage)
+        }
 
-        // Manejar clics en las tarjetas si es necesario
+        holder.courseTitle.text = currentVideo.nombre
+        val llamada = FormatoFechas()
+        val fechaSubida = llamada.formatoFechasString(currentVideo.fechaSubida)
+        holder.courseDate.text = fechaSubida
         holder.itemView.setOnClickListener {
-            // Lógica para manejar el clic en la tarjeta
+            val nombreVideo = currentVideo.id
         }
     }
 
     override fun getItemCount(): Int {
         return Videos.size
+    }
+
+    // Función para decodificar el String Base64
+    private fun decodeBase64(base64String: String?): ByteArray {
+        try {
+            return Base64.decode(base64String, Base64.DEFAULT)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Manejo de errores: Puedes mostrar un mensaje o registrar información en el log
+            return ByteArray(0)
+        }
     }
 }
