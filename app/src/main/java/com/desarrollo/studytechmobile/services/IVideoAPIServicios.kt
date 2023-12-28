@@ -9,4 +9,8 @@ interface IVideoAPIServicios {
     fun obtenerListaVideos(): Call<List<Video>>
     @GET("api/Videos/{id}")
     fun obtenerVideoPorId(@Path("id")id: Int):Call<Video>
+    @GET("favoritos/{id}")
+    fun obtenerFavoritosDeUsuario(@Path("id")idUser: Int?):Call<List<Video>>
+    @GET("mas-tarde/{id}")
+    fun obtenerMasTardeDeUsuario(@Path("id")idUser: Int?):Call<List<Video>>
 }

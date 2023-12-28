@@ -20,7 +20,9 @@
         <activity android:name=".ui.BarraActivity"/>
         <activity
             android:name=".ui.Login"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

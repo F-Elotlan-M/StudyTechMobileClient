@@ -106,10 +106,10 @@ class UsuariosAPIServicios {
         }
     }
 
-    fun getExistingUser(email: String): String? {
+    fun getExistingUser(name: String): String? {
         try{
             val service = httpClient.create(IUsuariosAPIServicios::class.java)
-            val call = service.getExistingUser(email)
+            val call = service.getExistingUser(name)
             val response = call.execute()
             if (response.isSuccessful) {
                 val usuarioDTO = response.body()

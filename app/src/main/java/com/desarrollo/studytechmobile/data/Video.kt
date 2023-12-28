@@ -8,5 +8,7 @@ data class Video (
     var fechaSubida: String? = null,
     var fechaModificacion: String? = null,
     var materia: Int = 0,
-    var valoracion: Int = 0
+    var valoracion: Int = 0,
+    var isFavorito: Boolean = false,
+    var isMasTarde: Boolean = false
 )

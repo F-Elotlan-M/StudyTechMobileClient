@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Filter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -19,12 +18,9 @@ import com.desarrollo.studytechmobile.utilidades.FormatoFechas
 import com.desarrollo.studytechmobile.utilidades.Mensajes
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import java.util.Locale
 
-// ...
-
-class AdaptadorCurso(private val context: Context, private var Videos: MutableList<Video>) :
-    RecyclerView.Adapter<AdaptadorCurso.CourseViewHolder>() {
+class AdaptadorCursoBusqueda(private val context: Context, private val Videos: List<Video>) :
+    RecyclerView.Adapter<AdaptadorCursoBusqueda.CourseViewHolder>() {
 
     inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -149,37 +145,6 @@ class AdaptadorCurso(private val context: Context, private var Videos: MutableLi
             e.printStackTrace()
             // Manejo de errores: Puedes mostrar un mensaje o registrar información en el log
             return ByteArray(0)
-        }
-    }
-
-    fun updateData(newList: List<Video>) {
-        Videos.clear()
-        Videos.addAll(newList)
-        notifyDataSetChanged()
-    }
-
-    fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val filteredList = mutableListOf<Video>()
-                val query = constraint?.toString()?.toLowerCase(Locale.getDefault()) ?: ""
-
-                for (video in Videos) {
-                    if (video.nombre.toLowerCase(Locale.getDefault()).contains(query)) {
-                        filteredList.add(video)
-                    }
-                }
-
-                val filterResults = FilterResults()
-                filterResults.values = filteredList
-                return filterResults
-            }
-
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val filteredList = results?.values as? MutableList<Video> ?: mutableListOf()
-                Videos = filteredList
-                notifyDataSetChanged()
-            }
         }
     }
 }

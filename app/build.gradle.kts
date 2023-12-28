@@ -76,7 +76,14 @@ dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.8.10")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("androidx.appcompat:appcompat:1.3.1")
+    implementation ("com.google.firebase:firebase-bom:28.4.0") // Utiliza la versión más reciente disponible
+    implementation ("com.google.firebase:firebase-firestore")
+    implementation ("io.grpc:grpc-kotlin-stub:1.1.0")
+    implementation ("io.grpc:grpc-okhttp:1.41.0")
+
 
 
 

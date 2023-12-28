@@ -42,15 +42,27 @@ class BarraActivity: AppCompatActivity() {
 
             R.id.nav_buscar -> {
                 actionBar.title = "Busqueda"
+                val fragmentBusqueda = BuscarFragment()
+                val transactionFragmentBuscar: FragmentTransaction = supportFragmentManager.beginTransaction()
+                transactionFragmentBuscar.replace(R.id.content, fragmentBusqueda, "")
+                transactionFragmentBuscar.commit()
                 true
             }
 
             R.id.nav_favoritos -> {
                 actionBar.title = "Favoritos"
+                val fragmentFavoritos = FavoritosFrament()
+                val transactionFavoritosFrament : FragmentTransaction = supportFragmentManager.beginTransaction()
+                transactionFavoritosFrament.replace(R.id.content, fragmentFavoritos, "")
+                transactionFavoritosFrament.commit()
                 true
             }
             R.id.nav_masTarde -> {
                 actionBar.title = "Ver más tarde"
+                val fragmentMasTarde = MasTardeFragment()
+                val transactionMasTardeFragment: FragmentTransaction = supportFragmentManager.beginTransaction()
+                transactionMasTardeFragment.replace(R.id.content, fragmentMasTarde, "")
+                transactionMasTardeFragment.commit()
                 true
             }
 

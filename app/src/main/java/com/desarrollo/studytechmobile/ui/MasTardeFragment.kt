@@ -18,28 +18,26 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class InicioFragment : Fragment() {
-    private lateinit var videos: MutableList<Video>
+class MasTardeFragment: Fragment() {
     private lateinit var videosFavoritos: MutableList<Video>
     private lateinit var videosMasTarde: MutableList<Video>
     private lateinit var recyclerView : RecyclerView
     val videoAPIServicios = VideoAPIServicios()
     private lateinit var adaptadorCurso : AdaptadorCurso
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                             savedInstanceState: Bundle?): View?
+                              savedInstanceState: Bundle?): View?
     {
         // Inflar el diseño del fragmento
-        val view = inflater.inflate(R.layout.fragment_inicio, container, false)
-        recyclerView = view.findViewById(R.id.postrecyclerview)
+        val view = inflater.inflate(R.layout.fragment_mas_tarde, container, false)
+        recyclerView = view.findViewById(R.id.masTardeRecyclerView)
         recyclerView.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = true
         recyclerView.layoutManager = layoutManager
 
-        videos = ArrayList()
+        videosMasTarde = ArrayList()
         generateDummyCourses()
 
         return view
@@ -48,37 +46,36 @@ class InicioFragment : Fragment() {
     private fun generateDummyCourses() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                // Verificar si el fragmento está adjunto a una actividad
+
                 if (isAdded) {
-                    videos = withContext(Dispatchers.IO) {
-                        async { videoAPIServicios.obtenerListaVideos() }.await()!!
+                    videosMasTarde = withContext(Dispatchers.IO) {
+                        async { videoAPIServicios.obtenerMasTardePorUsuario(UsuarioSingleton.Id) }.await()!!
                     } as MutableList<Video>
 
                     videosFavoritos = withContext(Dispatchers.IO) {
                         async { videoAPIServicios.obtenerFavoritosDeUsuario(UsuarioSingleton.Id) }.await()!!
                     } as MutableList<Video>
 
-                    videosMasTarde = withContext(Dispatchers.IO) {
-                        async { videoAPIServicios.obtenerMasTardePorUsuario(UsuarioSingleton.Id) }.await()!!
-                    } as MutableList<Video>
+                    videosMasTarde.forEach { video ->
+                        video.isMasTarde = true
+                    }
 
-                    videos.forEach { video ->
+                    videosMasTarde.forEach{video ->
                         video.isFavorito = videosFavoritos.any { it.id == video.id }
                     }
-                    videos.forEach { video ->
-                        video.isMasTarde = videosMasTarde.any { it.id == video.id }
-                    }
 
-                    if (recyclerView != null && isAdded && videos.isNotEmpty()) {
-                        if (videos[0] != null) {
-                            adaptadorCurso = AdaptadorCurso(requireActivity(), videos)
+                    println("la lista de mas tarde es: $videosMasTarde")
+
+                    if (recyclerView != null && isAdded && videosMasTarde.isNotEmpty()) {
+                        if (videosMasTarde[0] != null) {
+                            adaptadorCurso = AdaptadorCurso(requireActivity(), videosMasTarde)
                             recyclerView.adapter = adaptadorCurso
 
                         } else {
                             Toast.makeText(context, "Error al obtener los videos", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(context, "No existen cursos registrados", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "No hay videos para ver más tarde", Toast.LENGTH_SHORT).show()
                     }
 
                 }
@@ -88,9 +85,6 @@ class InicioFragment : Fragment() {
             }
         }
     }
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

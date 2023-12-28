@@ -34,6 +34,52 @@ class VideoAPIServicios {
         }
     }
 
+    fun obtenerFavoritosDeUsuario(id: Int?): List<Video>{
+        try{
+            val service = httpClient.create(IVideoAPIServicios::class.java)
+            val call = service.obtenerFavoritosDeUsuario(id)
+            val response = call.execute()
+
+            val videosFavoritos: List<Video> = if(response.isSuccessful){
+                val videosList = response.body() ?: emptyList()
+                println("el id es: $id")
+                println("la lista es $videosList")
+                videosList
+            }
+            else {
+                println("Error al obtener la lista de videos: ${response.code()} - ${response.message()}")
+                listOf(Video(id = -1, nombre = "Error"))
+
+            }
+            return videosFavoritos
+        } catch (ex: Exception) {
+            println("Excepción al obtener la lista de videos: ${ex.message}")
+            return emptyList()
+        }
+    }
+
+    fun obtenerMasTardePorUsuario(id: Int?): List<Video>{
+        try{
+            val service = httpClient.create(IVideoAPIServicios::class.java)
+            val call = service.obtenerMasTardeDeUsuario(id)
+            val response = call.execute()
+
+            val videosFavoritos: List<Video> = if(response.isSuccessful){
+                val videosList = response.body() ?: emptyList()
+                videosList
+            }
+            else {
+                println("Error al obtener la lista de videos: ${response.code()} - ${response.message()}")
+                listOf(Video(id = -1, nombre = "Error"))
+
+            }
+            return videosFavoritos
+        } catch (ex: Exception) {
+            println("Excepción al obtener la lista de videos: ${ex.message}")
+            return emptyList()
+        }
+    }
+
     fun obtenerVideoPorId(id: Int): Video {
         val videoObtenido = Video()
         try {
@@ -54,4 +100,6 @@ class VideoAPIServicios {
             return videoObtenido
         }
     }
+
+
 }

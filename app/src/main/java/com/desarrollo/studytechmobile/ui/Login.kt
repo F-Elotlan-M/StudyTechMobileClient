@@ -59,6 +59,7 @@ class Login : AppCompatActivity() {
                 }else if(userCredentials.token != null && userCredentials.token != ""){
                     accept = true
                     Toast.makeText(applicationContext, "Bienvenido:  $username", Toast.LENGTH_SHORT).show()
+                    user.Id = userCredentials.id
                     user.token = userCredentials.token;
                     user.username = username;
                     user.password = password;
@@ -67,7 +68,7 @@ class Login : AppCompatActivity() {
                 }
 
             }catch (e: Exception) {
-
+                println(e)
             }
         }
         return accept

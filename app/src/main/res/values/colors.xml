@@ -5,6 +5,8 @@
     <color name="naranjaClaro">#FFA500</color>
     <color name="fondo_login">#242c33</color>
     <color name="botonesPrincipales">#059b9a</color>
+    <color name="videosCard">#160d18</color>
     <color name="paleta1">#0c0636</color>
     <color name="paleta2">#095169</color>
+    <color name="colorGris">#808080</color>
 </resources>
