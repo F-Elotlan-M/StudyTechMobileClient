@@ -77,10 +77,8 @@ class FavoritosFrament: Fragment() {
                     } else {
                         Toast.makeText(context, "Aún no tienes videos favoritos", Toast.LENGTH_SHORT).show()
                     }
-
                 }
             } catch (e: Exception) {
-                // Manejar cualquier excepción que pueda ocurrir durante la operación asíncrona
                 e.printStackTrace()
             }
         }

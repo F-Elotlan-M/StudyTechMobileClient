@@ -4,9 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="40dp"
     app:cardElevation="4dp"
-    app:contentPadding="12dp">
+    app:contentPadding="12dp"
+    app:cardBackgroundColor="#0c0c0c"
+    android:background="@drawable/borde_cardview"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,6 +52,7 @@
                 android:layout_weight="1"
                 android:text="Agregar a Favoritos"
                 android:textSize="8dp"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/colorGris"
                 android:layout_marginEnd="4dp"/>
 
@@ -58,6 +63,7 @@
                 android:layout_weight="1"
                 android:text="Agregar a Ver Más Tarde"
                 android:textSize="8dp"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/colorGris"
                 android:layout_marginStart="4dp"/>
         </LinearLayout>

@@ -1,6 +1,7 @@
 package com.desarrollo.studytechmobile.ui
 
 import android.content.Context
+import android.content.Intent
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -133,8 +134,18 @@ class AdaptadorCurso(private val context: Context, private var Videos: MutableLi
         }
 
         holder.itemView.setOnClickListener {
-            val nombreVideo = currentVideo.id
+            val idVideo = currentVideo.id
+            val intent = Intent(context, Comentarios::class.java)
+            intent.putExtra("idVideo", idVideo)
+            context.startActivity(intent)
         }
+            /*
+            val mensaje: String = "El video es $nombreVideo"
+            val mensajeLlamada = Mensajes()
+            mensajeLlamada.mostrarMensaje(context, mensaje)
+        */
+
+
     }
 
     override fun getItemCount(): Int {

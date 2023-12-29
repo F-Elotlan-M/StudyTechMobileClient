@@ -1,33 +1,41 @@
 package com.desarrollo.studytechmobile.services
 
 import com.desarrollo.studytechmobile.data.DTOS.ComentariosDTO
-import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 
 class ComentariosAPIServicios {
     private val httpClient: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.70:7195/")
+        .baseUrl("http://192.168.1.71:7195/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     val service = httpClient.create(IComentariosAPIServicios::class.java)
 
-    fun obtenerListaComentarios(idVideo: Int): Pair<List<ComentariosDTO>, Int> {
-        try{
+    fun obtenerListaComentarios(idVideo: Int): List<ComentariosDTO> {
+        try {
+            println("El id es: $idVideo")
             val call = service.obtenerListaComentarios(idVideo)
             call.execute().let {
-                if(it.isSuccessful){
+                if (it.isSuccessful) {
                     val comentarios = it.body() ?: emptyList()
-                    return Pair(comentarios, 200)
-                }else{
-                    return Pair(emptyList(), 500)
+                    println("Recuperó comentarios: $comentarios")
+                    return comentarios
+                } else {
+                    println("Error en la respuesta: ${it.code()} - ${it.message()}")
+                    return emptyList()
                 }
             }
-        }catch (e: Exception){
-            return Pair(emptyList(), 500)
+        } catch (e: IOException) {
+            println("Error de red: $e")
+            return emptyList()
+        } catch (e: Exception) {
+            println("Excepción desconocida: $e")
+            return emptyList()
         }
     }
+
 
 
     suspend fun actualizarComentario(id: Int, comentario: ComentariosDTO): Boolean {

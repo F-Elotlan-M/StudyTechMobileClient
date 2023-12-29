@@ -1,8 +1,7 @@
 package com.desarrollo.studytechmobile.services
 
 import com.desarrollo.studytechmobile.data.DTOS.ComentariosDTO
-import com.desarrollo.studytechmobile.data.CredencialesUsuario
-import com.desarrollo.studytechmobile.data.RespuestaAutenticacion
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -13,8 +12,8 @@ import retrofit2.http.Path
 
 interface IComentariosAPIServicios {
 
-    @POST("api/Comentarios/comentarios_por_video/{id}")
-    fun obtenerListaComentarios(@Body idVideo: Int): retrofit2.Call<List<ComentariosDTO>>
+    @GET("api/Comentarios/comentarios_por_video/{id}")
+    fun obtenerListaComentarios(@Path("id") idVideo: Int): Call<List<ComentariosDTO>>
 
     @GET("api/Comentarios")
     suspend fun getComentarios(): retrofit2.Call<List<ComentariosDTO>>
