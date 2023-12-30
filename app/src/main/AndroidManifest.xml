@@ -24,6 +24,11 @@
         </activity>
 
         <activity
+            android:name=".ui.VideoReproduccion"
+            android:label="Comentarios">
+        </activity>
+
+        <activity
             android:name=".ui.Login"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
