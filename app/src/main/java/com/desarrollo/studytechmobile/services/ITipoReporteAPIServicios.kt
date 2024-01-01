@@ -1,6 +1,7 @@
 package com.desarrollo.studytechmobile.services
 
 import com.desarrollo.studytechmobile.data.DTOS.TipoReporteDTO
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -10,7 +11,7 @@ import retrofit2.http.Path
 
 interface ITipoReporteAPIServicios {
         @GET("api/TipoReportes")
-        suspend fun getTiposReporte(): List<TipoReporteDTO>
+        fun getTiposReporte(): Call<List<TipoReporteDTO>>
 
         @GET("api/TipoReportes/{id}")
         suspend fun getTipoReporte(@Path("id") id: Int): TipoReporteDTO

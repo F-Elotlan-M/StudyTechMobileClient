@@ -35,7 +35,6 @@ class Comentarios : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
 
         comentarios = ArrayList()
-        println("aquí está el id del video: $idVideo")
         recuperarComentariosDelVideo()
     }
 

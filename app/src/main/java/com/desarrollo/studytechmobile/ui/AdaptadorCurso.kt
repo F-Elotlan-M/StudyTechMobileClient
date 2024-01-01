@@ -135,8 +135,12 @@ class AdaptadorCurso(private val context: Context, private var Videos: MutableLi
 
         holder.itemView.setOnClickListener {
             val idVideo = currentVideo.id
-            val intent = Intent(context, Comentarios::class.java)
+            val isFavorito = currentVideo.isFavorito
+            val isMasTarde = currentVideo.isMasTarde
+            val intent = Intent(context, VideoReproduccion::class.java)
             intent.putExtra("idVideo", idVideo)
+            intent.putExtra("isFavorito", isFavorito)
+            intent.putExtra("isMasTarde", isMasTarde)
             context.startActivity(intent)
         }
             /*

@@ -3,30 +3,38 @@ package com.desarrollo.studytechmobile.services
 import com.desarrollo.studytechmobile.data.DTOS.TipoReporteDTO
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 
 class TipoReporteAPIServicios {
-    private val service: ITipoReporteAPIServicios
 
-    init {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.71:7195/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        service = retrofit.create(ITipoReporteAPIServicios::class.java)
-    }
+    private val httpClient: Retrofit = Retrofit.Builder()
+        .baseUrl("http://192.168.1.81:7195/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
     suspend fun obtenerTiposReporte(): List<TipoReporteDTO> {
-        return try {
-            service.getTiposReporte()
-        } catch (e: IOException) {
-            emptyList()
-        } catch (e: Exception) {
-            emptyList()
+        try{
+            val service = httpClient.create(ITipoReporteAPIServicios::class.java)
+            val call = service.getTiposReporte()
+            val response = call.execute()
+            val tipoReporte: List<TipoReporteDTO> = if(response.isSuccessful){
+                val listaTipoReporte = response.body() ?: emptyList()
+                val respuesta = response.code()
+                println("respuesta: $respuesta")
+                listaTipoReporte
+            }else {
+                println("Error al obtener la lista de videos: ${response.code()} - ${response.message()}")
+                emptyList()
+            }
+            return tipoReporte
+        }catch(e: Exception){
+            println("Excepción al obtener la lista de videos: ${e.message}")
+            return emptyList()
         }
     }
 
+
+    /*
     suspend fun obtenerTipoReporte(id: Int): TipoReporteDTO {
         return try {
             service.getTipoReporte(id)
@@ -69,4 +77,5 @@ class TipoReporteAPIServicios {
             false
         }
     }
+*/
 }

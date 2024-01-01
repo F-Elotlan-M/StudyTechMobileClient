@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.desarrollo.studytechmobile.R
 import com.desarrollo.studytechmobile.data.UsuarioSingleton
+import com.desarrollo.studytechmobile.services.TipoReporteAPIServicios
 import com.desarrollo.studytechmobile.services.UsuariosAPIServicios
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +18,7 @@ import kotlinx.coroutines.withContext
 
 class Login : AppCompatActivity() {
     private val usuariosAPIServicios = UsuariosAPIServicios()
+    private val tipoReporteAPI = TipoReporteAPIServicios()
     var user: UsuarioSingleton = UsuarioSingleton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

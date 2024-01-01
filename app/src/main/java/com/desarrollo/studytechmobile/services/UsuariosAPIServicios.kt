@@ -13,7 +13,7 @@ import java.net.UnknownHostException
 
 class UsuariosAPIServicios {
     private val httpClient: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.71:7195/")
+        .baseUrl("http://192.168.1.81:7195/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
