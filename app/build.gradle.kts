@@ -85,7 +85,13 @@ dependencies {
     implementation ("io.grpc:grpc-okhttp:1.41.0")
 
 
+    implementation("com.google.android.exoplayer:exoplayer-common:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
 
+    implementation("com.google.android.exoplayer:exoplayer:2.19.1")
+
+    implementation("io.grpc:grpc-okhttp:1.41.0")
+    implementation("io.grpc:grpc-stub:1.41.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation ("org.mockito:mockito-core:3.12.4")
