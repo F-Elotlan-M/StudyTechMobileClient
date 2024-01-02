@@ -15,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.desarrollo.studytechmobile.R
 import com.desarrollo.studytechmobile.data.Video
+import com.desarrollo.studytechmobile.services.CalificacionVideoAPIServicios
 import com.desarrollo.studytechmobile.services.VideoTypeAPIServicios
 import com.desarrollo.studytechmobile.utilidades.FormatoFechas
 import com.desarrollo.studytechmobile.utilidades.Mensajes
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 // ...
@@ -44,6 +48,7 @@ class AdaptadorCurso(private val context: Context, private var Videos: MutableLi
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
         val currentVideo = Videos[position]
         val videoType =  VideoTypeAPIServicios()
+        val calificacion = CalificacionVideoAPIServicios()
 
         if (currentVideo.imagen?.length ?: 0 >= 100) {
             val toRemove = "data:image/jpeg;base64,"
@@ -134,14 +139,29 @@ class AdaptadorCurso(private val context: Context, private var Videos: MutableLi
         }
 
         holder.itemView.setOnClickListener {
-            val idVideo = currentVideo.id
-            val isFavorito = currentVideo.isFavorito
-            val isMasTarde = currentVideo.isMasTarde
-            val intent = Intent(context, VideoReproduccion::class.java)
-            intent.putExtra("idVideo", idVideo)
-            intent.putExtra("isFavorito", isFavorito)
-            intent.putExtra("isMasTarde", isMasTarde)
-            context.startActivity(intent)
+            var calificacionVideo: Int = 0
+            MainScope().launch {
+                calificacionVideo = withContext(Dispatchers.IO){
+                    async { calificacion.obtenerCalificacion(currentVideo.id) }.await()!!
+                }
+                if(calificacionVideo < 0){
+                    calificacionVideo = 0
+                }
+                val url = currentVideo.ruta
+                val idVideo = currentVideo.id
+                val isFavorito = currentVideo.isFavorito
+                val isMasTarde = currentVideo.isMasTarde
+                val intent = Intent(context, VideoReproduccion::class.java)
+                intent.putExtra("idVideo", idVideo)
+                intent.putExtra("isFavorito", isFavorito)
+                intent.putExtra("isMasTarde", isMasTarde)
+                intent.putExtra("calificacion", calificacionVideo)
+                intent.putExtra("ruta", url)
+                context.startActivity(intent)
+            }
+
+            /*
+            */
         }
             /*
             val mensaje: String = "El video es $nombreVideo"

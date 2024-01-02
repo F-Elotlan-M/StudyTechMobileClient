@@ -4,6 +4,7 @@ package com.desarrollo.studytechmobile.ui
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.desarrollo.studytechmobile.R
@@ -27,6 +28,8 @@ class VideoReproduccion : AppCompatActivity() {
     private var idVideo: Int = 0
     private var isFavorito: Boolean = false
     private var isMasTarde: Boolean = false
+    private var calificacion: Int = 0
+    private var ruta: String = ""
     private lateinit var videosFavoritos: MutableList<Video>
     private lateinit var videosMasTarde: MutableList<Video>
     val videoAPIServicios = VideoAPIServicios()
@@ -46,6 +49,7 @@ class VideoReproduccion : AppCompatActivity() {
         val btnComentar = findViewById<Button>(R.id.btnComentar)
         val btnVerComentarios = findViewById<Button>(R.id.btnComentarios)
         val btnReportar = findViewById<Button>(R.id.btnReportar)
+        val textViewEditable = findViewById<TextView>(R.id.calificacionEditable)
         playerView = findViewById(R.id.playerView)
         playPauseButton = findViewById(R.id.playPauseButton)
         rewindButton = findViewById(R.id.rewindButton)
@@ -53,6 +57,10 @@ class VideoReproduccion : AppCompatActivity() {
         idVideo = intent.getIntExtra("idVideo", 0)
         isFavorito = intent.getBooleanExtra("isFavorito", false)
         isMasTarde = intent.getBooleanExtra("isMasTarde", false)
+        calificacion = intent.getIntExtra("calificacion", 0)
+        ruta = intent.getStringExtra("ruta").toString()
+
+        textViewEditable.setText(calificacion.toString())
 
         if(isFavorito){
             btnFavoritosVideo.setBackgroundColor(resources.getColor(R.color.botonesPrincipales))
@@ -172,10 +180,12 @@ class VideoReproduccion : AppCompatActivity() {
         player = SimpleExoPlayer.Builder(this, DefaultRenderersFactory(this)).build()
         playerView.player = player
 
-        val videoUrl =
-            "https://studyandroid.s3.us-east-2.amazonaws.com/1+minuto+-+%E2%8C%9A+Temporizador+y+Alarma+%E2%8F%B0+Cuenta+Regresiva.mp4"
+        if(ruta.length < 20){
+            ruta = "https://studyandroid.s3.us-east-2.amazonaws.com/1+minuto+-+%E2%8C%9A+Temporizador+y+Alarma+%E2%8F%B0+Cuenta+Regresiva.mp4"
+        }
 
-        val mediaItem = MediaItem.fromUri(videoUrl)
+
+        val mediaItem = MediaItem.fromUri(ruta)
         player.setMediaItem(mediaItem)
         player.prepare()
         player.play()
