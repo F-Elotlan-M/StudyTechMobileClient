@@ -7,7 +7,7 @@ import java.io.IOException
 
 class VideoAPIServicios {
     private val httpClient: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.86:7195/")
+        .baseUrl("http://192.168.1.71:7195/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

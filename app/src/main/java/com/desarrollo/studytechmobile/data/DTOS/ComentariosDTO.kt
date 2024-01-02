@@ -1,8 +1,8 @@
 package com.desarrollo.studytechmobile.data.DTOS
 
 class ComentariosDTO {
-    public var id: Int? = null
-    public var videoRelacionado: Int? = null
-    public var comentario: String? = null
-    public var username: String? = null
+    public var id: Int? = 0
+    public var videoRelacionado: Int? = 0
+    public var comentario: String? = ""
+    public var username: String? = ""
 }

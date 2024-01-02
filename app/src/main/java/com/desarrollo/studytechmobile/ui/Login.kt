@@ -46,33 +46,46 @@ class Login : AppCompatActivity() {
         var accept = false
         val username = findViewById<EditText>(R.id.username).text.toString()
         val password = findViewById<EditText>(R.id.password).text.toString()
-        CoroutineScope(Dispatchers.Main).launch {
-            try{
-                val userCredentials = withContext(Dispatchers.IO){
-                    usuariosAPIServicios.login(username, password)
-                }
-                var token = userCredentials.token
-                if(userCredentials.token == "error"){
-                    accept = false
-                    Toast.makeText(applicationContext, "El usuario no ha sido encontrado", Toast.LENGTH_SHORT).show()
-                } else if(userCredentials.token == "exception"){
-                    accept = false
-                    Toast.makeText(applicationContext, "Hubo un problema al realizar la acción, vuelve a intentarlo", Toast.LENGTH_SHORT).show()
-                }else if(userCredentials.token != null && userCredentials.token != ""){
-                    accept = true
-                    Toast.makeText(applicationContext, "Bienvenido:  $username", Toast.LENGTH_SHORT).show()
-                    user.Id = userCredentials.id
-                    user.token = userCredentials.token;
-                    user.username = username;
-                    user.password = password;
-                    val intent = Intent(applicationContext, BarraActivity::class.java)
-                    startActivity(intent)
-                }
+        if(validateNullFieldsAcademic(username)){
+            if(validateNullFieldsAcademic(password)){
+                CoroutineScope(Dispatchers.Main).launch {
+                    try{
+                        val userCredentials = withContext(Dispatchers.IO){
+                            usuariosAPIServicios.login(username, password)
+                        }
+                        var token = userCredentials.token
+                        if(userCredentials.token == "error"){
+                            accept = false
+                            Toast.makeText(applicationContext, "El usuario no ha sido encontrado", Toast.LENGTH_SHORT).show()
+                        } else if(userCredentials.token == "exception"){
+                            accept = false
+                            Toast.makeText(applicationContext, "Hubo un problema al realizar la acción, vuelve a intentarlo", Toast.LENGTH_SHORT).show()
+                        }else if(userCredentials.token != null && userCredentials.token != ""){
+                            accept = true
+                            Toast.makeText(applicationContext, "Bienvenido:  $username", Toast.LENGTH_SHORT).show()
+                            user.Id = userCredentials.id
+                            user.token = userCredentials.token;
+                            user.username = username;
+                            user.password = password;
+                            val intent = Intent(applicationContext, BarraActivity::class.java)
+                            startActivity(intent)
+                        }
 
-            }catch (e: Exception) {
-                println(e)
+                    }catch (e: Exception) {
+                        println(e)
+                    }
+                }
+            }else{
+                Toast.makeText(applicationContext, "Hay campos vacios", Toast.LENGTH_SHORT).show()
             }
+        }else{
+            Toast.makeText(applicationContext, "Hay campos vacios", Toast.LENGTH_SHORT).show()
         }
         return accept
     }
+
+    fun validateNullFieldsAcademic(cadena: String): Boolean {
+        return !cadena.isNullOrBlank() && !cadena.isNullOrBlank() && !cadena.isNullOrBlank()
+    }
+
 }

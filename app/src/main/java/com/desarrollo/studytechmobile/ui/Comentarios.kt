@@ -42,12 +42,10 @@ class Comentarios : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch{
             try{
                 if(!isFinishing && !isDestroyed){
+                    println("pasó aquí")
                     comentarios = withContext(Dispatchers.IO) {
                         async { comentariosAPIServicios.obtenerListaComentarios(idVideo) }.await()?.toMutableList() ?: mutableListOf()
                     } as MutableList<ComentariosDTO>
-                    val comentarioss = comentarios[0].comentario
-                    println("la lista recuperada es: $comentarioss")
-
                     if(recyclerView != null && !isFinishing && !isDestroyed && comentarios.isNotEmpty()){
                         if(comentarios[0] != null){
                             adaptadorComentario = AdaptadorComentario(this@Comentarios, comentarios)

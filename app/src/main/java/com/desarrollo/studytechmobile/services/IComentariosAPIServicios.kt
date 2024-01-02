@@ -1,6 +1,7 @@
 package com.desarrollo.studytechmobile.services
 
 import com.desarrollo.studytechmobile.data.DTOS.ComentariosDTO
+import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -22,7 +23,7 @@ interface IComentariosAPIServicios {
     suspend fun actualizarComentario(@Path("id") id: Int, @Body comentario: ComentariosDTO): Response<Boolean>
 
     @POST("api/Comentarios")
-    suspend fun crearComentario(@Body comentario: ComentariosDTO): ComentariosDTO
+    fun crearComentario(@Body comentario: JsonObject): Call<ComentariosDTO>
 
     @DELETE("api/Comentarios/{id}")
     suspend fun eliminarComentario(@Path("id") id: Int): Boolean

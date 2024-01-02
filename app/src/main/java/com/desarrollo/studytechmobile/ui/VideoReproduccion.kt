@@ -1,6 +1,7 @@
 package com.desarrollo.studytechmobile.ui
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -42,6 +43,9 @@ class VideoReproduccion : AppCompatActivity() {
         setContentView(R.layout.video_reproduccion)
         val btnFavoritosVideo = findViewById<Button>(R.id.btnFavoritosVideo)
         val btnTardeVideo = findViewById<Button>(R.id.btnTardeVideo)
+        val btnComentar = findViewById<Button>(R.id.btnComentar)
+        val btnVerComentarios = findViewById<Button>(R.id.btnComentarios)
+        val btnReportar = findViewById<Button>(R.id.btnReportar)
         playerView = findViewById(R.id.playerView)
         playPauseButton = findViewById(R.id.playPauseButton)
         rewindButton = findViewById(R.id.rewindButton)
@@ -55,6 +59,18 @@ class VideoReproduccion : AppCompatActivity() {
         }
         if(isMasTarde){
             btnTardeVideo.setBackgroundColor(resources.getColor(R.color.botonesPrincipales))
+        }
+
+        btnVerComentarios.setOnClickListener{
+            val intent = Intent(this, Comentarios::class.java)
+            intent.putExtra("idVideo", idVideo)
+            this.startActivity(intent)
+        }
+
+        btnComentar.setOnClickListener {
+            val intent = Intent(this, ComentarVideo::class.java)
+            intent.putExtra("idVideo", idVideo)
+            this.startActivity(intent)
         }
 
         //agrega y elimina de favoritos

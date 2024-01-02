@@ -24,8 +24,13 @@
         </activity>
 
         <activity
+            android:name=".ui.ComentarVideo"
+            android:label="Comentar">
+        </activity>
+
+        <activity
             android:name=".ui.VideoReproduccion"
-            android:label="Comentarios">
+            android:label="Video">
         </activity>
 
         <activity

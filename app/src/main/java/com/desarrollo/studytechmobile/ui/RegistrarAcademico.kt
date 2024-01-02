@@ -17,6 +17,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class RegistrarAcademico : AppCompatActivity() {
+    private lateinit var user: EditText
+    private lateinit var pass: EditText
+    private lateinit var name: EditText
     var username: String? = null
     var password: String? = null
     var nombre: String? = null
@@ -30,9 +33,12 @@ class RegistrarAcademico : AppCompatActivity() {
         val login = findViewById<TextView>(R.id.textLogin)
 
         buttonSingin.setOnClickListener {
-            nombre= findViewById<EditText>(R.id.nameAcademic).text.toString()
-            username = findViewById<EditText>(R.id.username).text.toString()
-            password = findViewById<EditText>(R.id.password).text.toString()
+            name = findViewById<EditText>(R.id.nameAcademic)
+            user = findViewById<EditText>(R.id.username)
+            pass = findViewById<EditText>(R.id.password)
+            nombre = name.text.toString()
+            username = user.text.toString()
+            password = pass.text.toString()
             tipo = 1
             singin()
         }
@@ -59,6 +65,9 @@ class RegistrarAcademico : AppCompatActivity() {
                         }
                         if(estadoRegistrarAcademico == 1){
                             Toast.makeText(applicationContext, "Acádemico registrado exitosamente", Toast.LENGTH_SHORT).show()
+                            name.text?.clear()
+                            user.text?.clear()
+                            pass.text?.clear()
                         }else if(estadoRegistrarAcademico == 0){
                             Toast.makeText(applicationContext, "El usuario no se ha podido registrar", Toast.LENGTH_SHORT).show()
                         }else if(estadoRegistrarAcademico == 2){

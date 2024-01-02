@@ -9,5 +9,8 @@
     <color name="paleta1">#0c0636</color>
     <color name="paleta2">#095169</color>
     <color name="colorGris">#808080</color>
+    <color name="reporte"> #f72712</color>
+    <color name="comentarios"> #909090</color>
+
 
 </resources>
