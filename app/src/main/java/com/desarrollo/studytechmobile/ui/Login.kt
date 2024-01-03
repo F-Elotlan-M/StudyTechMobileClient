@@ -61,14 +61,18 @@ class Login : AppCompatActivity() {
                             accept = false
                             Toast.makeText(applicationContext, "Hubo un problema al realizar la acción, vuelve a intentarlo", Toast.LENGTH_SHORT).show()
                         }else if(userCredentials.token != null && userCredentials.token != ""){
-                            accept = true
-                            Toast.makeText(applicationContext, "Bienvenido:  $username", Toast.LENGTH_SHORT).show()
-                            user.Id = userCredentials.id
-                            user.token = userCredentials.token;
-                            user.username = username;
-                            user.password = password;
-                            val intent = Intent(applicationContext, BarraActivity::class.java)
-                            startActivity(intent)
+                            if(userCredentials.tipoUsuaro == 2){
+                                accept = true
+                                Toast.makeText(applicationContext, "Bienvenido:  $username", Toast.LENGTH_SHORT).show()
+                                user.Id = userCredentials.id
+                                user.token = userCredentials.token;
+                                user.username = username;
+                                user.password = password;
+                                val intent = Intent(applicationContext, BarraActivity::class.java)
+                                startActivity(intent)
+                            }else{
+                                Toast.makeText(applicationContext, "Su tipo de usuario no puede usar el sistema movil", Toast.LENGTH_SHORT).show()
+                            }
                         }
 
                     }catch (e: Exception) {

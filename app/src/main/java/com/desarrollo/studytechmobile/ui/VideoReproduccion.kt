@@ -4,11 +4,15 @@ package com.desarrollo.studytechmobile.ui
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.desarrollo.studytechmobile.R
+import com.desarrollo.studytechmobile.data.DTOS.CalificacionDTO
+import com.desarrollo.studytechmobile.data.UsuarioSingleton
 import com.desarrollo.studytechmobile.data.Video
+import com.desarrollo.studytechmobile.services.CalificacionVideoAPIServicios
 import com.desarrollo.studytechmobile.services.VideoAPIServicios
 import com.desarrollo.studytechmobile.services.VideoTypeAPIServicios
 import com.desarrollo.studytechmobile.utilidades.Mensajes
@@ -18,8 +22,12 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class VideoReproduccion : AppCompatActivity() {
@@ -30,6 +38,8 @@ class VideoReproduccion : AppCompatActivity() {
     private var isMasTarde: Boolean = false
     private var calificacion: Int = 0
     private var ruta: String = ""
+    private var idCalificacion: Int = 0
+    private var calificacionUsuario: Int = 0
     private lateinit var videosFavoritos: MutableList<Video>
     private lateinit var videosMasTarde: MutableList<Video>
     val videoAPIServicios = VideoAPIServicios()
@@ -40,6 +50,7 @@ class VideoReproduccion : AppCompatActivity() {
     private lateinit var rewindButton: Button
     private lateinit var forwardButton: Button
     private var isPlaying = false
+    val calificacionLlamada = CalificacionVideoAPIServicios()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +61,7 @@ class VideoReproduccion : AppCompatActivity() {
         val btnVerComentarios = findViewById<Button>(R.id.btnComentarios)
         val btnReportar = findViewById<Button>(R.id.btnReportar)
         val textViewEditable = findViewById<TextView>(R.id.calificacionEditable)
+        val ratingBar: RatingBar = findViewById(R.id.ratingBar)
         playerView = findViewById(R.id.playerView)
         playPauseButton = findViewById(R.id.playPauseButton)
         rewindButton = findViewById(R.id.rewindButton)
@@ -59,14 +71,32 @@ class VideoReproduccion : AppCompatActivity() {
         isMasTarde = intent.getBooleanExtra("isMasTarde", false)
         calificacion = intent.getIntExtra("calificacion", 0)
         ruta = intent.getStringExtra("ruta").toString()
+        var idUsuario: Int? = UsuarioSingleton.Id
+        idCalificacion = intent.getIntExtra("idCalificacion", 0)
+        calificacionUsuario = intent.getIntExtra("calificacionUsuario", 0)
 
-        textViewEditable.setText(calificacion.toString())
+        if(calificacion == 0){
+            textViewEditable.setText("Video sin calificar")
+        }else{
+            textViewEditable.setText(calificacion.toString())
+        }
+
+        if(calificacionUsuario > 0){
+            ratingBar.rating = calificacionUsuario.toFloat()
+        }
+
 
         if(isFavorito){
             btnFavoritosVideo.setBackgroundColor(resources.getColor(R.color.botonesPrincipales))
         }
         if(isMasTarde){
             btnTardeVideo.setBackgroundColor(resources.getColor(R.color.botonesPrincipales))
+        }
+
+
+        ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
+            val ratingInt = rating.toInt()
+            enviarCalificacion(ratingInt, idVideo)
         }
 
         btnVerComentarios.setOnClickListener{
@@ -178,6 +208,34 @@ class VideoReproduccion : AppCompatActivity() {
             val duration = player.duration
             if (currentPosition + 10000 < duration) {
                 player.seekTo(currentPosition + 10000)
+            }
+        }
+    }
+
+    private fun enviarCalificacion(ratingInt: Int, video: Int){
+        var calificacionRecibida: CalificacionDTO? = null
+        var respuesta: Int = 0
+        var calificacionEnvio = CalificacionDTO()
+        calificacionEnvio.calificacionUsuario = ratingInt
+        calificacionEnvio.videoRelacionado = video
+        calificacionEnvio.usuarioRelacionado = UsuarioSingleton.Id
+
+        CoroutineScope(Dispatchers.Main).launch{
+            try {
+                respuesta = withContext(Dispatchers.IO) {
+                    async { calificacionLlamada.realizarCalificacion(calificacionEnvio) }.await()!!
+                }
+                if (respuesta == 1){
+                    Toast.makeText(applicationContext, "Video calificado", Toast.LENGTH_SHORT).show()
+                }else if(respuesta == -1){
+                    Toast.makeText(applicationContext, "Error al calificar el video", Toast.LENGTH_SHORT).show()
+                }else if(respuesta == -2){
+                    Toast.makeText(applicationContext, "Ocurrió una excepcion", Toast.LENGTH_SHORT).show()
+                }else if(respuesta == -3){
+                    Toast.makeText(applicationContext, "Ya existe una calificacion", Toast.LENGTH_SHORT).show()
+                }
+            }catch (e: Exception){
+                println("la excepción es: $e")
             }
         }
     }

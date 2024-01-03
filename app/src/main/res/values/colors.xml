@@ -11,6 +11,6 @@
     <color name="colorGris">#808080</color>
     <color name="reporte"> #f72712</color>
     <color name="comentarios"> #909090</color>
-
+    <color name="amarillo"> #f7ff00</color>
 
 </resources>

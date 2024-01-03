@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.desarrollo.studytechmobile.R
+import com.desarrollo.studytechmobile.data.DTOS.CalificacionDTO
+import com.desarrollo.studytechmobile.data.UsuarioSingleton
 import com.desarrollo.studytechmobile.data.Video
 import com.desarrollo.studytechmobile.services.CalificacionVideoAPIServicios
 import com.desarrollo.studytechmobile.services.VideoTypeAPIServicios
@@ -140,10 +142,18 @@ class AdaptadorCurso(private val context: Context, private var Videos: MutableLi
 
         holder.itemView.setOnClickListener {
             var calificacionVideo: Int = 0
+            var calificacionObjeto: CalificacionDTO? = null
+            var idUsuario: Int? = UsuarioSingleton.Id
             MainScope().launch {
                 calificacionVideo = withContext(Dispatchers.IO){
                     async { calificacion.obtenerCalificacion(currentVideo.id) }.await()!!
                 }
+
+                calificacionObjeto = withContext(Dispatchers.IO) {
+                    async { calificacion.buscarCalificacion(currentVideo.id, idUsuario) }.await()!!
+                }
+
+
                 if(calificacionVideo < 0){
                     calificacionVideo = 0
                 }
@@ -151,12 +161,17 @@ class AdaptadorCurso(private val context: Context, private var Videos: MutableLi
                 val idVideo = currentVideo.id
                 val isFavorito = currentVideo.isFavorito
                 val isMasTarde = currentVideo.isMasTarde
+                val idCalificacion = calificacionObjeto!!.id
+                val calificacionUsuario = calificacionObjeto!!.calificacionUsuario
+                println("aquiiiii: $idCalificacion y esto $calificacionUsuario")
                 val intent = Intent(context, VideoReproduccion::class.java)
                 intent.putExtra("idVideo", idVideo)
                 intent.putExtra("isFavorito", isFavorito)
                 intent.putExtra("isMasTarde", isMasTarde)
                 intent.putExtra("calificacion", calificacionVideo)
                 intent.putExtra("ruta", url)
+                intent.putExtra("idCalificacion", idCalificacion)
+                intent.putExtra("calificacionUsuario", calificacionUsuario)
                 context.startActivity(intent)
             }
 
