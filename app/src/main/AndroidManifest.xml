@@ -24,6 +24,11 @@
         </activity>
 
         <activity
+            android:name=".ui.Reportar"
+            android:label="Reportar">
+        </activity>
+
+        <activity
             android:name=".ui.ComentarVideo"
             android:label="Comentar">
         </activity>

@@ -1,21 +1,43 @@
 package com.desarrollo.studytechmobile.services
 import com.desarrollo.studytechmobile.data.DTOS.ReporteDTO
+import com.google.gson.JsonObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 
 class ReporteAPIServicios {
-    private val service: IReporteAPIServicios
-
-    init {
-        val retrofit = Retrofit.Builder()
+        private val httpClient: Retrofit = Retrofit.Builder()
             .baseUrl("http://192.168.1.71:7195/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        service = retrofit.create(IReporteAPIServicios::class.java)
+    fun crearReporte(reporteDTO: ReporteDTO): Int {
+        var Respuesta: Int = 0
+        try {
+            val service = httpClient.create(IReporteAPIServicios::class.java)
+            val jsonBody = JsonObject().apply {
+                addProperty("usuarioReporte", reporteDTO.usuarioReporte)
+                addProperty("videoReporte", reporteDTO.videoReporte)
+                addProperty("tipoReporte", reporteDTO.tipoReporte)
+            }
+
+            val call = service.crearReporte(jsonBody)
+            val response = call.execute()
+
+            if(response.isSuccessful){
+                Respuesta = 1
+                println("crear reporte dio: ${response.code()}")
+            }else{
+                Respuesta = -1
+                println("crear reporte dio sino: ${response.code()}")
+            }
+        }catch (e: Exception){
+            println("crear reporte dio excepcion: $e")
+            Respuesta = -2
+        }
+        return Respuesta
     }
 
+/*
     suspend fun obtenerReportes(): List<ReporteDTO> {
         return try {
             service.getReportes()
@@ -48,14 +70,10 @@ class ReporteAPIServicios {
         }
     }
 
-    suspend fun crearReporte(reporteDTO: ReporteDTO): Boolean {
-        return try {
-            service.crearReporte(reporteDTO)
-            true
-        } catch (e: IOException) {
-            false
-        } catch (e: Exception) {
-            false
+    suspend fun crearReporte(reporteDTO: ReporteDTO): Int {
+        var Respuesta: Int
+        try {
+            val service = retrofit
         }
     }
 
@@ -68,5 +86,5 @@ class ReporteAPIServicios {
         } catch (e: Exception) {
             false
         }
-    }
+    }*/
 }

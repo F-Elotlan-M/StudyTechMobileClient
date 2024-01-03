@@ -1,6 +1,8 @@
 package com.desarrollo.studytechmobile.services
 
 import com.desarrollo.studytechmobile.data.DTOS.ReporteDTO
+import com.google.gson.JsonObject
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -19,7 +21,7 @@ interface IReporteAPIServicios {
     suspend fun actualizarReporte(@Path("id") id: Int, @Body reporteDTO: ReporteDTO)
 
     @POST("api/Reportes")
-    suspend fun crearReporte(@Body reporteDTO: ReporteDTO): ReporteDTO
+    fun crearReporte(@Body reporteDTO: JsonObject): Call<ReporteDTO>
 
     @DELETE("api/Reportes/{id}")
     suspend fun eliminarReporte(@Path("id") id: Int)

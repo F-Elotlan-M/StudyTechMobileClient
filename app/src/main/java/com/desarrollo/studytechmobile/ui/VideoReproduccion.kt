@@ -81,6 +81,12 @@ class VideoReproduccion : AppCompatActivity() {
             this.startActivity(intent)
         }
 
+        btnReportar.setOnClickListener {
+            val intent = Intent(this, Reportar::class.java)
+            intent.putExtra("idVideo", idVideo)
+            this.startActivity(intent)
+        }
+
         //agrega y elimina de favoritos
         btnFavoritosVideo.setOnClickListener{
             if(isFavorito){

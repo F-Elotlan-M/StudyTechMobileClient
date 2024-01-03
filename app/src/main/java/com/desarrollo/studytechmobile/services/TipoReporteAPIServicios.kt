@@ -5,14 +5,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class TipoReporteAPIServicios {
-
-
     private val httpClient: Retrofit = Retrofit.Builder()
         .baseUrl("http://192.168.1.71:7195/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    suspend fun obtenerTiposReporte(): List<TipoReporteDTO> {
+    fun obtenerTiposReporte(): List<TipoReporteDTO> {
         try{
             val service = httpClient.create(ITipoReporteAPIServicios::class.java)
             val call = service.getTiposReporte()
