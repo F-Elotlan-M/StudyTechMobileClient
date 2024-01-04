@@ -26,13 +26,14 @@ class UsuariosAPIServicios {
             datosLogin.username = username
             datosLogin.password = password
             datosLogin.nombre = ""
-            datosLogin.tipo = 0
+            datosLogin.tipoUsuario = 0
 
             val call = service.login(datosLogin)
             val response = call.execute()
 
             if(response.isSuccessful){
                 val credenciales = response.body()!!
+                println("en loin: ${credenciales.token} ")
                 return credenciales
             }else {
                 credenciales.token = "error"
@@ -89,7 +90,7 @@ class UsuariosAPIServicios {
                 addProperty("username", nuevoUsuario.username)
                 addProperty("password", nuevoUsuario.password)
                 addProperty("nombre", nuevoUsuario.nombre)
-                addProperty("tipo", nuevoUsuario.tipo)
+                addProperty("tipo", nuevoUsuario.tipoUsuario)
             }
 
             val call = service.registrar(jsonBody)

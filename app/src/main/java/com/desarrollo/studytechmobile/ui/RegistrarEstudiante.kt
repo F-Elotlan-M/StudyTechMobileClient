@@ -54,7 +54,7 @@ class RegistrarEstudiante : AppCompatActivity() {
                 credencialesUsuario.nombre = nombre
                 credencialesUsuario.password = password
                 credencialesUsuario.username = username
-                credencialesUsuario.tipo = 2
+                credencialesUsuario.tipoUsuario = 2
                 CoroutineScope(Dispatchers.Main).launch {
                     val validateExistingUser = withContext(Dispatchers.IO) {
                         async { usuariosAPIServicios.getExistingUser(username!!) }.await()

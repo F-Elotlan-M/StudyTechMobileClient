@@ -8,7 +8,7 @@
     app:cardCornerRadius="40dp"
     app:cardElevation="4dp"
     app:contentPadding="12dp"
-    app:cardBackgroundColor="#0c0c0c"
+    app:cardBackgroundColor="@color/fondo_login"
     android:background="@drawable/borde_cardview"
     >
 

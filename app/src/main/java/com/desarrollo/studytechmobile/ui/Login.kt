@@ -61,7 +61,9 @@ class Login : AppCompatActivity() {
                             accept = false
                             Toast.makeText(applicationContext, "Hubo un problema al realizar la acción, vuelve a intentarlo", Toast.LENGTH_SHORT).show()
                         }else if(userCredentials.token != null && userCredentials.token != ""){
-                            if(userCredentials.tipoUsuaro == 2){
+                            var tipoUsuario = userCredentials.tipoUsuario
+                            println("el tipo usuario es: $tipoUsuario")
+                            if(userCredentials.tipoUsuario == 2){
                                 accept = true
                                 Toast.makeText(applicationContext, "Bienvenido:  $username", Toast.LENGTH_SHORT).show()
                                 user.Id = userCredentials.id
@@ -71,7 +73,13 @@ class Login : AppCompatActivity() {
                                 val intent = Intent(applicationContext, BarraActivity::class.java)
                                 startActivity(intent)
                             }else{
-                                Toast.makeText(applicationContext, "Su tipo de usuario no puede usar el sistema movil", Toast.LENGTH_SHORT).show()
+                                user.Id = userCredentials.id
+                                user.token = userCredentials.token;
+                                user.username = username;
+                                user.password = password;
+                                Toast.makeText(applicationContext, "Bienvenido:  $username", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(applicationContext, BarrAdminActivity::class.java)
+                                startActivity(intent)
                             }
                         }
 

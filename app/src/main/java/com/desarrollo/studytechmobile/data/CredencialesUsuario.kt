@@ -4,5 +4,5 @@ data class CredencialesUsuario (
     var username: String? = null,
     var password: String? = null,
     var nombre: String? = null,
-    var tipo: Int? = null
+    var tipoUsuario: Int? = null
 )

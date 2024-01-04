@@ -12,7 +12,7 @@ import retrofit2.http.Path
 
 interface IReporteAPIServicios {
     @GET("api/Reportes")
-    suspend fun getReportes(): List<ReporteDTO>
+    fun getReportes(): Call<List<ReporteDTO>>
 
     @GET("api/Reportes/{id}")
     suspend fun getReporte(@Path("id") id: Int): ReporteDTO

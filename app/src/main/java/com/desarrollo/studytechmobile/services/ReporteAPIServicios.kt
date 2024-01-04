@@ -37,6 +37,25 @@ class ReporteAPIServicios {
         return Respuesta
     }
 
+    fun obtenerReportes(): List<ReporteDTO>{
+        try {
+            val service = httpClient.create(IReporteAPIServicios::class.java)
+            val call = service.getReportes()
+            val response = call.execute()
+            val listaReportes: List<ReporteDTO> = if(response.isSuccessful){
+                val reportesList = response.body() ?: emptyList()
+                reportesList
+            }else {
+                println("Error al obtener la lista de videos: ${response.code()} - ${response.message()}")
+                emptyList()
+            }
+            return listaReportes
+        }catch (e: Exception){
+            println("ocurré una excepción: $e")
+            return emptyList()
+        }
+    }
+
 /*
     suspend fun obtenerReportes(): List<ReporteDTO> {
         return try {
