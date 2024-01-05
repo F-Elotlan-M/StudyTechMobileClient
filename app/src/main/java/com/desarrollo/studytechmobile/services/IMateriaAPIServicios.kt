@@ -1,6 +1,7 @@
 package com.desarrollo.studytechmobile.services
 
 import com.desarrollo.studytechmobile.data.DTOS.MateriaDTO
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -10,7 +11,7 @@ import retrofit2.http.Path
 
 interface IMateriaAPIServicios {
     @GET("api/Materias")
-    suspend fun getMaterias(): List<MateriaDTO>
+    fun getMaterias(): Call<List<MateriaDTO>>
 
     @GET("api/Materias/{id}")
     suspend fun getMateria(@Path("id") id: Int): MateriaDTO

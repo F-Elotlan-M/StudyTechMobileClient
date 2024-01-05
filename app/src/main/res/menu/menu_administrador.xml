@@ -6,7 +6,7 @@
         android:title="Reportes" />
 
     <item
-        android:id="@+id/nav_comentarios"
-        android:icon="@drawable/coment"
-        android:title="Comentarios"/>
+        android:id="@+id/nav_Materias"
+        android:icon="@drawable/presentation"
+        android:title="Cursos"/>
 </menu>

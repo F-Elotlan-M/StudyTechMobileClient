@@ -96,7 +96,7 @@ class FragmentReporte: Fragment() {
                             Toast.makeText(context, "Error al obtener los reportes", Toast.LENGTH_SHORT).show()
                         }
                     }else{
-                        Toast.makeText(context, "Aún no ay reportes", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Aún no hay reportes", Toast.LENGTH_SHORT).show()
                     }
                 }
             }catch (e: Exception){

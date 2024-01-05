@@ -34,8 +34,12 @@ class BarrAdminActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.nav_comentarios -> {
-                actionBar.title = "Busqueda"
+            R.id.nav_Materias -> {
+                actionBar.title = "Cursos"
+                val fragmentMaterias = CursoFragment()
+                val transactionFragmentMaterias: FragmentTransaction = supportFragmentManager.beginTransaction()
+                transactionFragmentMaterias.replace(R.id.Admin, fragmentMaterias, "")
+                transactionFragmentMaterias.commit()
                 true
             }
             else -> false

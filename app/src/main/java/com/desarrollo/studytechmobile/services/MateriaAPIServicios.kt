@@ -3,28 +3,33 @@ package com.desarrollo.studytechmobile.services
 import com.desarrollo.studytechmobile.data.DTOS.MateriaDTO
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 
 class MateriaAPIServicios {
-    private val service: IMateriaAPIServicios
-    init {
-         val httpClient: Retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.71:7195/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        service = httpClient.create(IMateriaAPIServicios::class.java)
-    }
+    private val httpClient: Retrofit = Retrofit.Builder()
+        .baseUrl("http://192.168.1.71:7195/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-    suspend fun obtenerMaterias(): List<MateriaDTO> {
-        return try {
-            service.getMaterias()
-        } catch (e: IOException) {
-            emptyList()
-        } catch (e: Exception) {
-            emptyList()
+    fun obtenerMaterias(): List<MateriaDTO> {
+        try {
+            val service = httpClient.create(IMateriaAPIServicios::class.java)
+            val call = service.getMaterias()
+            val response = call.execute()
+            val materia: List<MateriaDTO> = if(response.isSuccessful){
+                val listamateria = response.body() ?: emptyList()
+                listamateria
+            }else{
+                println("Error al obtener la lista de videos: ${response.code()} - ${response.message()}")
+                emptyList()
+            }
+            return materia
+        }catch (e: Exception){
+            println("la excepción es: $e")
+            return emptyList()
         }
     }
 
+    /*s
     suspend fun obtenerMateria(id: Int): MateriaDTO {
         return try {
             service.getMateria(id)
@@ -66,5 +71,5 @@ class MateriaAPIServicios {
         } catch (e: Exception) {
             false
         }
-    }
+    }*/
 }
