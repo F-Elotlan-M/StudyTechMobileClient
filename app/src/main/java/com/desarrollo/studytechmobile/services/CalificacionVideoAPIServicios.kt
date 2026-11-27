@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class CalificacionVideoAPIServicios {
     private val httpClient: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.71:7195/")
+        .baseUrl("http://192.168.100.7:5162/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
